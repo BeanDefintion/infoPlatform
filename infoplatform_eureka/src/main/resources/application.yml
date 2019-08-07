@@ -1,0 +1,18 @@
+﻿server:
+  port: 9000
+spring:
+  application:
+    name: infoplatform_eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      # 集群设置 是否把自己注册到eureka
+    register-with-eureka: false
+    # 集群设置 是否从注册中心获取信息
+    fetch-registry: false
+  instance:
+    hostname: localhost
+    prefer-ip-address: true #以IP地址注册到服务中心，相互注册使用IP地址
+#    ip-address: 127.0.0.1  #指定IP地址
+

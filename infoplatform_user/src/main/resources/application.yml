@@ -1,0 +1,8 @@
+﻿spring:
+  cloud:
+    config:
+      name: user #基础姓名
+      label: master #git分支
+      profile: dev #所属环境
+  application:
+    name: infoplatform_user

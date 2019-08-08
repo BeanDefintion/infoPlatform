@@ -5,4 +5,11 @@ spring:
       label: master #git分支
       profile: dev #所属环境
       uri: http://localhost:9001 #自己的配置中心地址
+  rabbitmq:
+    host: 127.0.0.1
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

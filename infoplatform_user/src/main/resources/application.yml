@@ -1,18 +1,18 @@
-spring:
-  application:
-    name: user
-
-server:
-  port: 9003
-
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone:  http://tssb:xixi@localhost:9000/eureka/
-
-swagger:
-  base-path: /**
-  enabled: true
-  exclude-path: /error/**
+#spring:
+#  application:
+#    name: user
+#
+#server:
+#  port: 9003
+#
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    service-url:
+#      defaultZone:  http://tssb:xixi@localhost:9000/eureka/
+#
+#swagger:
+#  base-path: /**
+#  enabled: true
+#  exclude-path: /error/**

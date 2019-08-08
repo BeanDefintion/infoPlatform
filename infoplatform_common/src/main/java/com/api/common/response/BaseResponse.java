@@ -32,4 +32,8 @@ public class BaseResponse<T> {
         this.msg = statusCode.getMsg();
     }
 
+    public BaseResponse(StatusCode statusCode, String msg) {
+        this.code = statusCode.getCode();
+        this.msg = msg;
+    }
 }

@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+      name: user #基础姓名
+      label: master #git分支
+      profile: dev #所属环境
+      uri: http://localhost:9001 #自己的配置中心地址
+

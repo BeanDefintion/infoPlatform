@@ -2,12 +2,11 @@ package com.platform.eureka;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * WebSecurityConfig
+ * WebSecurityConfig 关闭Spring Security的跨域保护
  *
  * @author 15293
  * @version 1.0

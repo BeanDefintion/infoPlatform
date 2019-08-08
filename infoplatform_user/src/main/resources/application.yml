@@ -1,8 +1,18 @@
-﻿spring:
-  cloud:
-    config:
-      name: user #基础姓名
-      label: master #git分支
-      profile: dev #所属环境
+spring:
   application:
-    name: infoplatform_user
+    name: user
+
+server:
+  port: 9003
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone:  http://tssb:xixi@localhost:9000/eureka/
+
+swagger:
+  base-path: /**
+  enabled: true
+  exclude-path: /error/**

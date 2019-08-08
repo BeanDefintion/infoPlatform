@@ -1,0 +1,28 @@
+server:
+  port: 9004
+
+spring:
+  application:
+    name: infoplatform_gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: false #设为true便开启通过服务中心的自动根据 serviceId 创建路由的功
+      routes:
+        - id: infoplatform_user
+          #          uri: lb://infoplatform_user #lb代表从注册中心获取服务
+          uri: http://127.0.0.1:9003
+          filters:
+            - StripPrefix=1
+          predicates:
+            - Path=/user/**/**,/user/**
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://tssb:xixi@localhost:9000/eureka/
+  instance:
+    prefer-ip-address: true

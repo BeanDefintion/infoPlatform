@@ -1,4 +1,4 @@
-package com.infoplatform.configuration;
+package com.infoplatform.gateway.configuration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

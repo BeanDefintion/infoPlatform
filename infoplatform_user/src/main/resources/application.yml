@@ -1,6 +1,6 @@
 #spring:
 #  application:
-#    name: user
+#    name: infoplatform_user
 #
 #server:
 #  port: 9003
@@ -12,7 +12,18 @@
 #    service-url:
 #      defaultZone:  http://tssb:xixi@localhost:9000/eureka/
 #
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#
 #swagger:
 #  base-path: /**
 #  enabled: true
-#  exclude-path: /error/**
+#  exclude-path: /error/**,/actuator/**
+#
+#jwt:
+#  config:
+#    key: itcast
+#    ttl: 360000

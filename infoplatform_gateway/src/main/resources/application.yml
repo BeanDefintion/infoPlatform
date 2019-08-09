@@ -26,3 +26,12 @@ eureka:
       defaultZone: http://tssb:xixi@localhost:9000/eureka/
   instance:
     prefer-ip-address: true
+
+jwt:
+  config:
+    key: itcast
+    ttl: 360000
+
+auth:
+  skip:
+    urls: /user/login/login,/user/login/refresh

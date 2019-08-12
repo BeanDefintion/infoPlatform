@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: infoplatform_management
+
+server:
+  port: 9004
+  servlet:
+    context-path: /management/
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone:  http://tssb:xixi@localhost:9000/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+swagger:
+  base-path: /**
+  enabled: true
+  exclude-path: /error/**,/actuator/**
+
+jwt:
+  config:
+    key: itcast

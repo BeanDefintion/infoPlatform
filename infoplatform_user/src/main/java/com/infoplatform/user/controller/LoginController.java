@@ -37,9 +37,8 @@ public class LoginController {
 
     @ApiOperation(value = "登陆接口", notes = "token 认证签名 1小时过期 过期后需要用另一个参数refreshToken来进行更新 " +
             "refreshToken 24小时内有效 用于token过期后的续期")
-//    @PostMapping("login")
-    @GetMapping("login")
-    public BaseResponse login(@RequestParam String userName, @RequestParam String password) {
+    @GetMapping("token/gain/web")
+    public BaseResponse tokenGain(@RequestParam String userName, @RequestParam String password) {
         //账号密码校验
         if (StringUtils.equals(userName, "admin") && StringUtils.equals(password, "admin")) {
             //生成JWT
@@ -60,10 +59,9 @@ public class LoginController {
         return new BaseResponse(StatusCode.FAIL);
     }
 
-    @ApiOperation(value = "刷新token")
-    @GetMapping("refresh")
-//    @PostMapping("refresh")
-    public BaseResponse refreshToken(@RequestParam String refreshToken, @RequestParam String token) {
+    @ApiOperation(value = "刷新token 前端应在获取到token的1小时内 例如50分钟 ")
+    @PostMapping("token/refresh")
+    public BaseResponse refreshToken(@RequestParam String refreshToken) {
         Map<String, Object> resultMap = new HashMap<>();
         String refreshTokenKey = CommonConstant.REDISSTOREPREFIX + "REFRESHTOKEN:" + refreshToken;
         String userName = (String) redisTemplate.opsForHash().get(refreshTokenKey, "userName");
@@ -75,7 +73,8 @@ public class LoginController {
         //替换当前token，并将旧token添加到黑名单
         String oldToken = (String) redisTemplate.opsForHash().get(refreshTokenKey, "token");
         redisTemplate.opsForHash().put(refreshTokenKey, "token", newToken);
-        redisTemplate.opsForValue().set(refreshTokenKey, "", 24 * 60 * 60, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForHash().put(refreshTokenKey, "userName", userName);
+        redisTemplate.expire(refreshTokenKey, 24 * 60 * 60, TimeUnit.SECONDS);
         resultMap.put("code", "10000");
         resultMap.put("data", newToken);
         return new BaseResponse(StatusCode.SUCCESS.getCode(), "成功", resultMap);

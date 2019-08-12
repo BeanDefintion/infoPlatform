@@ -10,6 +10,7 @@
         <module>infoplatform_config</module>
         <module>infoplatform_user</module>
         <module>infoplatform_gateway</module>
+        <module>infoplatform_management</module>
     </modules>
 
     <parent>

@@ -1,5 +1,5 @@
 server:
-  port: 9004
+  port: 9002
 
 spring:
   application:
@@ -15,9 +15,15 @@ spring:
           #          uri: lb://infoplatform_user #lb代表从注册中心获取服务
           uri: http://127.0.0.1:9003
           filters:
-            - StripPrefix=1
+          #            - StripPrefix=1
           predicates:
-            - Path=/user/**/**,/user/**
+            - Path=/user/**
+        - id: infoplatform_management
+          uri: http://127.0.0.1:9004
+          filters:
+          #            - StripPrefix=1
+          predicates:
+            - Path=/management/**
 
 
 eureka:
@@ -30,7 +36,6 @@ eureka:
 jwt:
   config:
     key: itcast
-    ttl: 360000
 
 auth:
   skip:

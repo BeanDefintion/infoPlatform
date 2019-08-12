@@ -1,16 +1,11 @@
 package com.api.common.util;
 
-import com.typesafe.config.ConfigFactory;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 鉴权Util
@@ -52,7 +47,7 @@ public class JwtUtil {
      * @param jwtStr
      * @return
      */
-    public Claims parseJWT(String jwtStr) {
+    public Claims parseJWT(String jwtStr) throws ExpiredJwtException {
         return Jwts.parser().setSigningKey(key).parseClaimsJws(jwtStr).getBody();
     }
 

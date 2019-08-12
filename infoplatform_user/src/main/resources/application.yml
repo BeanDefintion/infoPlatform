@@ -4,6 +4,8 @@
 #
 #server:
 #  port: 9003
+#  servlet:
+#    context-path: /user/
 #
 #eureka:
 #  instance:
@@ -26,4 +28,4 @@
 #jwt:
 #  config:
 #    key: itcast
-#    ttl: 360000
+#    ttl: 3600000

@@ -24,6 +24,12 @@ spring:
           #            - StripPrefix=1
           predicates:
             - Path=/management/**
+        - id: infoplatform_friend
+          uri: http://127.0.0.1:9005
+          filters:
+          #            - StripPrefix=1
+          predicates:
+            - Path=/friend/**
 
 
 eureka:

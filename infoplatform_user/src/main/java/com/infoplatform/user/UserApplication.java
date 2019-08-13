@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 public class UserApplication {
 
     public static void main(String[] args) {
-        ApplicationContext context = SpringApplication.run(UserApplication.class, args);
+        SpringApplication.run(UserApplication.class, args);
     }
 
     @Bean
@@ -34,9 +34,4 @@ public class UserApplication {
         return new JwtUtil();
     }
 
-//    @Primary
-//    @Bean
-//    public RedisTemplate redisTemplate() {
-//        return new RedisUtil().redisTemplate();
-//    }
 }

@@ -11,6 +11,7 @@
         <module>infoplatform_user</module>
         <module>infoplatform_gateway</module>
         <module>infoplatform_management</module>
+        <module>infoplatform_friend</module>
     </modules>
 
     <parent>

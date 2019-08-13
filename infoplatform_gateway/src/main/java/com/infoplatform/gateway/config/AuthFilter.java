@@ -79,15 +79,13 @@ public class AuthFilter implements GlobalFilter, Ordered {
         if (claims.isEmpty())
             return getVoidMono(exchange, StatusCode.INVALIDPARAMS);
 
+        // 进行权限的拦截
         String roles = String.valueOf(claims.get("roles"));
         if (StringUtils.isNotBlank(roles)) {
-            if (Arrays.asList(roles).contains("dog")) {
-                System.err.println(111111111);
+            if (Arrays.asList(roles).contains("admin")) {
+
             }
         }
-
-        if (url.startsWith("/management"))
-            System.err.println("xxxxxxxxxxxxxxxxx");
 
         //将现在的request，添加当前身份
         ServerHttpRequest mutableReq = exchange.getRequest().mutate().header("Authorization-UserName", new String[]{claims.getSubject()}).build();

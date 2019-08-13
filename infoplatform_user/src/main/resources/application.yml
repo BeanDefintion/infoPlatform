@@ -1,31 +1,31 @@
-#spring:
-#  application:
-#    name: infoplatform_user
-#
-#server:
-#  port: 9003
-#  servlet:
-#    context-path: /user/
-#
-#eureka:
-#  instance:
-#    prefer-ip-address: true
-#  client:
-#    service-url:
-#      defaultZone:  http://tssb:xixi@localhost:9000/eureka/
-#
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "*"
-#
-#swagger:
-#  base-path: /**
-#  enabled: true
-#  exclude-path: /error/**,/actuator/**
-#
-#jwt:
-#  config:
-#    key: itcast
-#    ttl: 3600000
+spring:
+  application:
+    name: infoplatform_user
+
+server:
+  port: 9003
+  servlet:
+    context-path: /user/
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone:  http://tssb:xixi@localhost:9000/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+swagger:
+  base-path: /**
+  enabled: true
+  exclude-path: /error/**,/actuator/**
+
+jwt:
+  config:
+    key: itcast
+    ttl: 3600000

@@ -1,6 +1,6 @@
-package com.infoplatform.friend.friend.service;
+package com.infoplatform.friend.server.service;
 
-import com.infoplatform.friend.friend.entity.PmFriend;
+import com.infoplatform.friend.server.entity.PmFriend;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPmFriendService extends IService<PmFriend> {
 
+    PmFriend selectByUserIdAndFriendId(Long userId, Long pmFriendId);
 }

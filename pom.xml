@@ -36,6 +36,9 @@
 
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <lombok.version>1.16.10</lombok.version>
+        <mybatis-plus.version>3.1.2</mybatis-plus.version>
+        <freemarket.version>2.3.28</freemarket.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
     </properties>
 
     <dependencies>
@@ -54,6 +57,38 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+
+        <dependency><!--mybatis plus的快速启动项目-->
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency><!--mybatis plus 代码自动生成器-->
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency><!--mybatis plus支持freemarket模块-->
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${freemarket.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
     </dependencies>
 

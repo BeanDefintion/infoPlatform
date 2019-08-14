@@ -1,6 +1,6 @@
-package com.infoplatform.friend.friend.mapper;
+package com.infoplatform.friend.server.mapper;
 
-import com.infoplatform.friend.friend.entity.PmFriend;
+import com.infoplatform.friend.server.entity.PmFriend;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

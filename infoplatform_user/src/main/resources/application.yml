@@ -1,6 +1,12 @@
 spring:
   application:
     name: infoplatform_user
+  datasource:
+    url: jdbc:mysql://localhost:3312/im_user?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&autoReconnect=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
 
 server:
   port: 9003
@@ -29,3 +35,6 @@ jwt:
   config:
     key: itcast
     ttl: 3600000
+
+mybatis-plus:
+  mapper-locations: classpath*:/com/**/mapper/*.xml

@@ -1,7 +1,10 @@
-package com.infoplatform.friend.friend.entity;
+package com.infoplatform.friend.server.entity;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author jack
@@ -19,11 +22,12 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PmFriend对象", description="")
+@ApiModel(value = "PmFriend对象", description = "")
 public class PmFriend implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "", type = IdType.AUTO)
     private Long pmId;
 
     @ApiModelProperty(value = "用户id")

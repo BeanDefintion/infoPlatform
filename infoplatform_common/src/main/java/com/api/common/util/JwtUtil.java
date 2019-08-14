@@ -26,14 +26,17 @@ public class JwtUtil {
     /**
      * 生成JWT
      *
-     * @param id
-     * @param subject 用户认证
+     * @param id      用户Id
+     * @param subject 用户名字
+     * @param roles   用户角色
+     * @param permits 用户权限
      * @return
      */
-    public String createJWT(String id, String subject, String roles) {
+    public String createJWT(String id, String subject, String roles, String permits) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-        JwtBuilder builder = Jwts.builder().setId(id).setSubject(subject).setIssuedAt(now).signWith(SignatureAlgorithm.HS256, key).claim("roles", roles);
+        JwtBuilder builder = Jwts.builder().setId(id).setSubject(subject).setIssuedAt(now)
+                .signWith(SignatureAlgorithm.HS256, key).claim("roles", roles).claim("permits", permits);
         if (ttl > 0) {
             builder.setExpiration(new Date(nowMillis + ttl));
         }

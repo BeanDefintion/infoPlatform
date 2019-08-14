@@ -13,7 +13,7 @@
     <artifactId>infoplatform_config</artifactId>
 
     <properties>
-        <start-class>com.infoplatform.gateway.configuration.ConfigurationApplication</start-class>
+        <start-class>com.infoplatform.config.ConfigurationApplication</start-class>
         <java-version>1.8</java-version>
     </properties>
 

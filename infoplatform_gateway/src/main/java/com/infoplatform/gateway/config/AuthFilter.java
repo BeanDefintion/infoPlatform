@@ -88,7 +88,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }
 
         //将现在的request，添加当前身份
-        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header("Authorization-UserName", new String[]{claims.getSubject()}).build();
+        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header("Authorization-UserName", new String[]{claims.getSubject()}).
+                header("Authorization-UserId", new String[]{claims.getId()}).build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
         return chain.filter(mutableExchange);
     }

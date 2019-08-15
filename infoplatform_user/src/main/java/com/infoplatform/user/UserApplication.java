@@ -23,7 +23,6 @@ import java.util.stream.Stream;
  * @since 2019/8/7 16:08
  **/
 @MapperScan(basePackages = "com.infoplatform.user.server.mapper")
-@ComponentScan(basePackages = {"com.**.**"})
 @SpringCloudApplication
 public class UserApplication {
 
@@ -37,16 +36,5 @@ public class UserApplication {
         return new JwtUtil();
     }
 
-    @Bean
-    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean() {
-        MybatisSqlSessionFactoryBean mybatisPlus = new MybatisSqlSessionFactoryBean();
-        mybatisPlus.setDataSource(dataSource());
-        return mybatisPlus;
-    }
-
-    @Bean
-    public DataSource dataSource() {
-        return new HikariDataSource();
-    }
 }
 

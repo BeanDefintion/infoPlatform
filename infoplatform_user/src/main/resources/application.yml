@@ -37,4 +37,4 @@ jwt:
     ttl: 3600000
 
 mybatis-plus:
-  mapper-locations: classpath*:/com/**/mapper/*.xml
+  mapper-locations: classpath*:mapper/**/*.xml

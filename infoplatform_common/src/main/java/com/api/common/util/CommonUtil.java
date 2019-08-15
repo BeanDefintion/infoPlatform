@@ -1,7 +1,11 @@
 package com.api.common.util;
 
+import com.api.common.constant.CommonConstant;
+import org.apache.commons.lang3.StringUtils;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.List;
 
 /**
  * 公共类
@@ -16,11 +20,9 @@ public class CommonUtil {
      * 获取SHA1加密值
      **/
     public static String sha1Encoder(String str) {
-        if (str == null || str.length() == 0) {
-            return null;
-        }
-        char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'a', 'b', 'c', 'd', 'e', 'f'};
+        if (str == null || str.length() == 0) return null;
+
+        char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
         try {
             MessageDigest mdTemp = MessageDigest.getInstance("SHA1");
             mdTemp.update(str.getBytes(StandardCharsets.UTF_8));
@@ -37,5 +39,15 @@ public class CommonUtil {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     * List转换成string
+     *
+     * @param list List集合
+     * @return String
+     **/
+    public static String transferListToString(List<String> list) {
+        return StringUtils.join(list, CommonConstant.COMMA_SEPARATOR);
     }
 }

@@ -5,12 +5,17 @@ import com.api.common.enums.StatusCode;
 import com.api.common.response.BaseResponse;
 import com.api.common.util.CommonUtil;
 import com.api.common.util.JwtUtil;
+import com.infoplatform.user.server.entity.TbPermit;
+import com.infoplatform.user.server.entity.TbRole;
 import com.infoplatform.user.server.entity.TbUser;
 import com.infoplatform.user.server.entity.TbUserSalt;
 import com.infoplatform.user.server.mapper.TbUserMapper;
 import com.infoplatform.user.server.mapper.TbUserSaltMapper;
+import com.infoplatform.user.server.service.ITbPermitService;
+import com.infoplatform.user.server.service.ITbRoleService;
 import com.infoplatform.user.server.service.ITbUserSaltService;
 import com.infoplatform.user.server.service.ITbUserService;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
@@ -21,9 +26,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * LoginController
@@ -49,6 +56,12 @@ public class LoginController {
     @Autowired
     private ITbUserSaltService userSaltService;
 
+    @Autowired
+    private ITbRoleService roleService;
+
+    @Autowired
+    private ITbPermitService permitService;
+
     @Resource
     private TbUserMapper userMapper;
 
@@ -61,14 +74,17 @@ public class LoginController {
     public BaseResponse tokenGain(@RequestParam String userName, @RequestParam String password) {
         //账号密码校验
         TbUser user = userService.findByLoginName(userName);
-        if (user == null) return new BaseResponse(StatusCode.FAIL, "用户名或密码错误!");
+        if (user == null) return new BaseResponse(StatusCode.LOGINERROR);
 
         TbUserSalt userSalt = userSaltService.selectByUserId(user.getUserId());
         if (!user.getPassword().equals(CommonUtil.sha1Encoder(password + userSalt.getUserSalt())))
-            return new BaseResponse(StatusCode.FAIL, "用户名或密码错误!");
+            return new BaseResponse(StatusCode.LOGINERROR);
 
+        List<TbRole> roles = roleService.selectByUserId(user.getUserId());
+        List<String> roleNames = roles.stream().map(TbRole::getRoleName).collect(Collectors.toList());
+        List<TbPermit> permits = permitService.selectByUserId(user.getUserId());
         // 生成JWT
-        String token = jwtUtil.createJWT(String.valueOf(user.getUserId()), userName, "", "");
+        String token = jwtUtil.createJWT(String.valueOf(user.getUserId()), userName, CommonUtil.transferListToString(roleNames), "");
         // 生成refreshToken
         String refreshToken = UUID.randomUUID().toString().replaceAll("-", "");
         // 保存refreshToken至redis，使用hash结构保存使用中的token以及用户标识
@@ -93,9 +109,11 @@ public class LoginController {
             return new BaseResponse(StatusCode.FAIL, "refreshToken过期");
         }
 
-        String newToken = jwtUtil.createJWT("1", "tssb", "dog", "");
+
         //替换当前token，并将旧token添加到黑名单
         String oldToken = (String) redisTemplate.opsForHash().get(refreshTokenKey, "token");
+        Claims claims = jwtUtil.parseJWT(oldToken);
+        String newToken = jwtUtil.createJWT(claims.getId(), claims.getSubject(), claims.get("roles") + "", claims.get("permits") + "");
         redisTemplate.opsForHash().put(refreshTokenKey, "token", newToken);
         redisTemplate.opsForHash().put(refreshTokenKey, "userName", userName);
         redisTemplate.expire(refreshTokenKey, 24 * 60 * 60, TimeUnit.SECONDS);

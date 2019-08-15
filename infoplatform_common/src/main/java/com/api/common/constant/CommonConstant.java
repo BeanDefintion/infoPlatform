@@ -13,4 +13,9 @@ public class CommonConstant {
      * 全局的Redis前缀
      **/
     public static final String REDISSTOREPREFIX = "infoPlatform:";
+
+    /**
+     * 逗号分隔符
+     **/
+    public static final String COMMA_SEPARATOR = ",";
 }

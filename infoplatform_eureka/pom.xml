@@ -9,13 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <description>信息化平台的注册中心</description>
-
     <artifactId>infoplatform_eureka</artifactId>
 
     <properties>
-
     </properties>
-
 
     <dependencies>
         <dependency>
@@ -27,4 +24,5 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
+
 </project>

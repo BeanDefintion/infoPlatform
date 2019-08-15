@@ -21,6 +21,5 @@ eureka:
 #    ip-address: 127.0.0.1  #指定IP地址
 
 
-security:
 
 

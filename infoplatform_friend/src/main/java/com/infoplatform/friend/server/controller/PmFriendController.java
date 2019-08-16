@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Api(tags = "朋友微服务(/friend/)-好友")
 @RestController
-@RequestMapping("pm-friend")
+@RequestMapping("/server/pm-friend")
 public class PmFriendController {
 
     @Resource
@@ -44,6 +45,14 @@ public class PmFriendController {
     public BaseResponse create(HttpServletRequest request, @RequestBody PmFriend pmFriend) {
         Long userId = Long.valueOf(request.getHeader("authorization-userId"));
         PmFriend friend = pmFriendService.selectByUserIdAndFriendId(userId, pmFriend.getPmFriendId());
+        if (null != friend) {
+            pmFriend.setIsLike(true);
+            pmFriend.setUpdTime(LocalDateTime.now());
+            friend.setIsLike(true);
+            friendMapper.updateById(friend);
+        }
+        pmFriend.setCrtTime(LocalDateTime.now());
+        pmFriend.setUpdTime(LocalDateTime.now());
         friendMapper.insert(pmFriend);
         return new BaseResponse(StatusCode.SUCCESS);
     }

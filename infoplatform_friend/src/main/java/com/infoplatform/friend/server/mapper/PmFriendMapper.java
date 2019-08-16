@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author jack
- * @since 2019-08-13
+ * @since 2019-08-16
  */
 public interface PmFriendMapper extends BaseMapper<PmFriend> {
 

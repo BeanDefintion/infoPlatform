@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 2019/8/9 11:13
  **/
-@RequestMapping("login")
+@RequestMapping("/server/login")
 @Api(tags = "用户微服务-登陆模块")
 @RestController
 public class LoginController {
@@ -80,11 +80,7 @@ public class LoginController {
         if (!user.getPassword().equals(CommonUtil.sha1Encoder(password + userSalt.getUserSalt())))
             return new BaseResponse(StatusCode.LOGINERROR);
 
-        List<TbRole> roles = roleService.selectByUserId(user.getUserId());
-        List<String> roleNames = roles.stream().map(TbRole::getRoleName).collect(Collectors.toList());
-        List<TbPermit> permits = permitService.selectByUserId(user.getUserId());
-        // 生成JWT
-        String token = jwtUtil.createJWT(String.valueOf(user.getUserId()), userName, CommonUtil.transferListToString(roleNames), "");
+        String token = gainTokenByUser(userName, user);
         // 生成refreshToken
         String refreshToken = UUID.randomUUID().toString().replaceAll("-", "");
         // 保存refreshToken至redis，使用hash结构保存使用中的token以及用户标识
@@ -109,17 +105,28 @@ public class LoginController {
             return new BaseResponse(StatusCode.FAIL, "refreshToken过期");
         }
 
-
         //替换当前token，并将旧token添加到黑名单
         String oldToken = (String) redisTemplate.opsForHash().get(refreshTokenKey, "token");
-        Claims claims = jwtUtil.parseJWT(oldToken);
-        String newToken = jwtUtil.createJWT(claims.getId(), claims.getSubject(), claims.get("roles") + "", claims.get("permits") + "");
+        TbUser user = userService.findByLoginName(userName);
+        String newToken = gainTokenByUser(userName, user);
         redisTemplate.opsForHash().put(refreshTokenKey, "token", newToken);
         redisTemplate.opsForHash().put(refreshTokenKey, "userName", userName);
         redisTemplate.expire(refreshTokenKey, 24 * 60 * 60, TimeUnit.SECONDS);
+        String blackListKey = CommonConstant.REDISSTOREPREFIX + "BLACKTOKENLIST:" + oldToken;
+        redisTemplate.opsForValue().set(blackListKey, newToken);
+        redisTemplate.expire(blackListKey, 24 * 60 * 60, TimeUnit.SECONDS);
         resultMap.put("code", "10000");
         resultMap.put("data", newToken);
         return new BaseResponse(StatusCode.SUCCESS.getCode(), "成功", resultMap);
+    }
+
+    private String gainTokenByUser(String userName, TbUser user) {
+        List<TbRole> roles = roleService.selectByUserId(user.getUserId());
+        List<String> roleNames = roles.stream().map(TbRole::getRoleName).collect(Collectors.toList());
+        List<TbPermit> permits = permitService.selectByUserId(user.getUserId());
+        List<String> permitNames = permits.stream().map(TbPermit::getPermitName).collect(Collectors.toList());
+        return jwtUtil.createJWT(String.valueOf(user.getUserId()), userName,
+                CommonUtil.transferListToString(roleNames), CommonUtil.transferListToString(permitNames));
     }
 
     @ApiOperation("注册,生成一个用户")
@@ -138,8 +145,10 @@ public class LoginController {
 
         TbUserSalt userSalt = new TbUserSalt();
         userSalt.setUserId(user.getUserId());
-        String userSaltString = UUID.randomUUID().toString().substring(0, 5);
+        String userSaltString = UUID.randomUUID().toString().substring(0, 6);
         userSalt.setUserSalt(userSaltString);
+        userSalt.setCrtTime(LocalDateTime.now());
+        userSalt.setUpdateTime(LocalDateTime.now());
         userSaltMapper.insert(userSalt);
 
         user.setPassword(CommonUtil.sha1Encoder(passWord + userSaltString));

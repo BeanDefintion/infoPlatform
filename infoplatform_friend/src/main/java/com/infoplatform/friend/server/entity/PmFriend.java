@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author jack
- * @since 2019-08-13
+ * @since 2019-08-16
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -27,7 +27,7 @@ public class PmFriend implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "", type = IdType.AUTO)
+    @TableId(value = "pm_id", type = IdType.AUTO)
     private Long pmId;
 
     @ApiModelProperty(value = "用户id")

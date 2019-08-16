@@ -1,10 +1,17 @@
 package com.infoplatform.friend;
 
+import com.api.common.util.RedisUtil;
+import com.spring4all.swagger.EnableSwagger2Doc;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * FriendApplication
@@ -13,12 +20,19 @@ import org.springframework.context.annotation.ComponentScan;
  * @version 1.0
  * @since 2019/8/13 13:39
  **/
-@ComponentScan(basePackages = {"com.**.**"})
-@MapperScan(basePackages = "com.infoplatform.friend.**.mapper")
+@EnableFeignClients
+@EnableSwagger2Doc
+@MapperScan(basePackages = "com.infoplatform.friend.server.mapper")
 @SpringCloudApplication
 public class FriendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FriendApplication.class, args);
+    }
+
+    @Primary
+    @Bean
+    public RedisTemplate redisTemplate() {
+        return new RedisUtil().redisTemplate();
     }
 }

@@ -20,11 +20,11 @@ eureka:
     service-url:
       defaultZone:  http://tssb:xixi@localhost:9000/eureka/
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
 
 swagger:
   base-path: /**

@@ -13,5 +13,29 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITbUserService extends IService<TbUser> {
 
+    /**
+     * 根据用户名查找用户
+     *
+     * @param userName 用户名
+     * @return TbUser
+     **/
     TbUser findByLoginName(String userName);
+
+    /**
+     * 增加关注数
+     *
+     * @param userId 用户id
+     * @param num    增加的数目
+     * @return void
+     **/
+    void incFollowCount(Long userId, int num);
+
+    /**
+     * 增加粉丝数
+     *
+     * @param userId 用户id
+     * @param num    增加的数目
+     * @return void
+     **/
+    void incFansCount(Long userId, int num);
 }

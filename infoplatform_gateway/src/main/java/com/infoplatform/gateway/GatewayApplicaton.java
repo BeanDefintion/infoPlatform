@@ -1,12 +1,15 @@
 package com.infoplatform.gateway;
 
 import com.api.common.util.JwtUtil;
+import com.api.common.util.RedisUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * GatewayApplicaton
@@ -27,4 +30,11 @@ public class GatewayApplicaton {
     public JwtUtil jwtUtil() {
         return new JwtUtil();
     }
+
+    @Primary
+    @Bean
+    public RedisTemplate redisTemplate() {
+        return new RedisUtil().redisTemplate();
+    }
+
 }

@@ -30,4 +30,18 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
         wrapper.eq(TbUser::getLoginName, userName);
         return userMapper.selectOne(wrapper);
     }
+
+    @Override
+    public void incFollowCount(Long userId, int num) {
+        TbUser user = userMapper.selectById(userId);
+        user.setFollowCount(user.getFollowCount() + num);
+        userMapper.updateById(user);
+    }
+
+    @Override
+    public void incFansCount(Long userId, int num) {
+        TbUser user = userMapper.selectById(userId);
+        user.setFansCount(user.getFansCount() + num);
+        userMapper.updateById(user);
+    }
 }

@@ -1,5 +1,6 @@
 package com.infoplatform.gateway.config;
 
+import com.api.common.constant.CommonConstant;
 import com.api.common.enums.StatusCode;
 import com.api.common.util.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -36,7 +37,7 @@ import java.util.Date;
 @Component
 public class AuthFilter implements GlobalFilter, Ordered {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 
     @Value("${auth.skip.urls}")
     private String[] skipAuthUrls;
@@ -56,11 +57,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String url = exchange.getRequest().getURI().getPath();
         // 跳过不需要验证的路径
-        if (Arrays.asList(skipAuthUrls).contains(url))
-            return chain.filter(exchange);
-
-        if (HttpMethod.OPTIONS.equals(exchange.getRequest().getMethod()))
-            return chain.filter(exchange);
+        if (Arrays.asList(skipAuthUrls).contains(url)) return chain.filter(exchange);
+        if (HttpMethod.OPTIONS.equals(exchange.getRequest().getMethod())) return chain.filter(exchange);
 
         //从请求头中取出token
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
@@ -75,11 +73,9 @@ public class AuthFilter implements GlobalFilter, Ordered {
         } catch (ExpiredJwtException e) {
             return getVoidMono(exchange, StatusCode.EXPIRETOKEN);
         }
+        if (claims.isEmpty()) return getVoidMono(exchange, StatusCode.INVALIDPARAMS);
 
-        if (claims.isEmpty())
-            return getVoidMono(exchange, StatusCode.INVALIDPARAMS);
-
-        // 进行权限的拦截
+        //todo 对特定url 进行权限的拦截
         String roles = String.valueOf(claims.get("roles"));
         if (StringUtils.isNotBlank(roles)) {
             if (Arrays.asList(roles).contains("admin")) {
@@ -116,6 +112,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
      */
     private boolean isBlackToken(String token) {
         assert token != null;
-        return stringRedisTemplate.hasKey(token);
+        return stringRedisTemplate.hasKey(CommonConstant.REDISSTOREPREFIX + "BLACKTOKENLIST:" + token);
     }
 }

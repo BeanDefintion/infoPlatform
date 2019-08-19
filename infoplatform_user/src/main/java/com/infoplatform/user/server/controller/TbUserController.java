@@ -1,6 +1,8 @@
 package com.infoplatform.user.server.controller;
 
 
+import com.api.common.enums.StatusCode;
+import com.api.common.response.BaseResponse;
 import com.infoplatform.user.server.service.ITbUserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -28,8 +30,18 @@ public class TbUserController {
     @ApiOperation("增加粉丝")
     @ApiImplicitParam(name = "num", value = "增加的粉丝数", paramType = "path", required = true)
     @PostMapping(value = "/incfans/{num}")
-    public void incFanscount(HttpServletRequest request, @PathVariable int num) {
+    public BaseResponse incFanscount(HttpServletRequest request, @PathVariable int num) {
         Long userId = Long.valueOf(request.getHeader("authorization-userId"));
         userService.incFansCount(userId, num);
+        return new BaseResponse(StatusCode.SUCCESS);
+    }
+
+    @ApiOperation("增加关注")
+    @ApiImplicitParam(name = "num", value = "增加的粉丝数", paramType = "path", required = true)
+    @PostMapping(value = "/incfollows/{num}")
+    public BaseResponse incFollowcount(HttpServletRequest request, @PathVariable int num) {
+        Long userId = Long.valueOf(request.getHeader("authorization-userId"));
+        userService.incFollowCount(userId, num);
+        return new BaseResponse(StatusCode.SUCCESS);
     }
 }

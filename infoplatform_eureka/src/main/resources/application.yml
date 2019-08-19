@@ -2,7 +2,7 @@
   port: 9000
 spring:
   application:
-    name: infoplatform_eureka
+    name: infoplatform-eureka
   security:
     user:
       name: tssb

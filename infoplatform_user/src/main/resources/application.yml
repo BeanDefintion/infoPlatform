@@ -1,6 +1,6 @@
 spring:
   application:
-    name: infoplatform_user
+    name: infoplatform-user
   datasource:
     url: jdbc:mysql://localhost:3312/im_user?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&autoReconnect=true
     username: root

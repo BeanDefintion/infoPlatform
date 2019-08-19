@@ -1,6 +1,6 @@
 spring:
   application:
-    name: infoplatform_config
+    name: infoplatform-config
   cloud:
     config:
       server:

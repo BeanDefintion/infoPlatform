@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>infoplatform_common</artifactId>
+    <properties>
+        <redis.version>3.0.1</redis.version>
+        <servlet.version>4.0.1</servlet.version>
+    </properties>
 
 
     <dependencies>
@@ -37,7 +41,12 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>3.0.1</version>
+            <version>${redis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet.version}</version>
         </dependency>
     </dependencies>
 </project>

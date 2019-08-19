@@ -3,6 +3,7 @@ package com.api.common.util;
 import com.api.common.constant.CommonConstant;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.List;
@@ -18,6 +19,9 @@ public class CommonUtil {
 
     /**
      * 获取SHA1加密值
+     *
+     * @param str 加密字符串
+     * @return String
      **/
     public static String sha1Encoder(String str) {
         if (str == null || str.length() == 0) return null;
@@ -49,5 +53,17 @@ public class CommonUtil {
      **/
     public static String transferListToString(List<String> list) {
         return StringUtils.join(list, CommonConstant.COMMA_SEPARATOR);
+    }
+
+    /**
+     * 根据
+     **/
+    public Long gainUserIdByRequest(HttpServletRequest request) {
+        try {
+            return Long.valueOf(request.getHeader("authorization-userId"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("");
+        }
     }
 }

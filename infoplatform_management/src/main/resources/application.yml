@@ -1,6 +1,6 @@
 spring:
   application:
-    name: infoplatform_management
+    name: infoplatform-management
 
 server:
   port: 9004

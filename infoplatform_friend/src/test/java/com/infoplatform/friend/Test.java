@@ -31,7 +31,7 @@ public class Test {
 
     public boolean releaseLock(String key, String requestId) {
         DefaultRedisScript redisScript = new DefaultRedisScript();
-        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("lua/redis.lua")));
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/static/lua/redis.lua")));
         Object result = redisTemplate.execute(redisScript, new StringRedisSerializer(), new StringRedisSerializer(), Collections.singletonList(key), requestId);
         System.err.println("田帅是个大傻逼! " + result);
         if (EXEC_RESULT.equals(result)) {
@@ -55,7 +55,7 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        System.err.println(new ClassPathResource("lua/redis.lua"));
+        System.err.println(new ClassPathResource("/static/lua/redis.lua").exists());
     }
 
 }

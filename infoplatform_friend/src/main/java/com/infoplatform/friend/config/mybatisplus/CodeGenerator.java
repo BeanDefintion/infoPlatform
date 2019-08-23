@@ -1,4 +1,4 @@
-package com.infoplatform.friend.config;
+package com.infoplatform.friend.config.mybatisplus;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -157,7 +157,7 @@ public class CodeGenerator {
         strategy.setEntityLombokModel(true);
         // 生成restcontroller
         strategy.setRestControllerStyle(true);
-//        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+        strategy.setInclude(scanner("表名，多个英文逗号分割,只输入一个,会生成全部").split(","));
         // 自定义基础的Entity类，公共字段
         strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);

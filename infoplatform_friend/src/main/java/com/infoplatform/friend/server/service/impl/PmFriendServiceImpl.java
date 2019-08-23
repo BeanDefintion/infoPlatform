@@ -2,6 +2,8 @@ package com.infoplatform.friend.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infoplatform.friend.server.entity.PmFriend;
 import com.infoplatform.friend.server.mapper.PmFriendMapper;
 import com.infoplatform.friend.server.service.IPmFriendService;
@@ -29,5 +31,28 @@ public class PmFriendServiceImpl extends ServiceImpl<PmFriendMapper, PmFriend> i
         LambdaQueryWrapper<PmFriend> wrapper = new QueryWrapper<PmFriend>().lambda();
         wrapper.eq(PmFriend::getPmFriendId, pmFriendId).eq(PmFriend::getPmUserId, userId);
         return friendMapper.selectOne(wrapper);
+    }
+
+    @Override
+    public Integer deleteByUserIdAndFriendId(Long userId, Long pmFriendId) {
+        LambdaQueryWrapper<PmFriend> wrapper = new QueryWrapper<PmFriend>().lambda();
+        wrapper.eq(PmFriend::getPmFriendId, pmFriendId).eq(PmFriend::getPmUserId, userId);
+        return friendMapper.delete(wrapper);
+    }
+
+    @Override
+    public IPage<PmFriend> selectFollowListByUserId(Page<PmFriend> friendPage, Long userId) {
+        LambdaQueryWrapper<PmFriend> wrapper = new QueryWrapper<PmFriend>().lambda();
+        wrapper.eq(PmFriend::getPmUserId, userId);
+        wrapper.orderByDesc(PmFriend::getCrtTime);
+        return friendMapper.selectPage(friendPage, wrapper);
+    }
+
+    @Override
+    public IPage<PmFriend> selectFansByUserId(Page<PmFriend> friendPage, Long userId) {
+        LambdaQueryWrapper<PmFriend> wrapper = new QueryWrapper<PmFriend>().lambda();
+        wrapper.eq(PmFriend::getPmFriendId, userId);
+        wrapper.orderByDesc(PmFriend::getCrtTime);
+        return friendMapper.selectPage(friendPage, wrapper);
     }
 }

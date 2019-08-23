@@ -2,8 +2,11 @@ package com.infoplatform.friend.server.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.infoplatform.friend.server.enums.RelationTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author jack
@@ -21,28 +24,26 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PmFriend对象", description="")
-public class PmFriend implements Serializable {
+@ApiModel(value = "PmLike对象", description = "")
+public class PmLike implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "pm_id", type = IdType.AUTO)
-    private Long pmId;
+    @ApiModelProperty(value = "主键id")
+    @TableId(value = "like_id", type = IdType.AUTO)
+    private Long likeId;
 
-    @ApiModelProperty(value = "用户id")
-    private Long pmUserId;
+    @ApiModelProperty(value = "点赞用户id")
+    private Long likeUserId;
 
-    @ApiModelProperty(value = "用户姓名")
-    private String pmUserName;
+    @ApiModelProperty(value = "点赞用户名称")
+    private String likeUserName;
 
-    @ApiModelProperty(value = "被关注者id")
-    private Long pmFriendId;
+    @ApiModelProperty(value = "点赞类型 枚举")
+    private RelationTypeEnum likeType;
 
-    @ApiModelProperty(value = "被关注者姓名")
-    private String pmFriendName;
-
-    @ApiModelProperty(value = "是否互相关注")
-    private Boolean isLike;
+    @ApiModelProperty(value = "关联的Id")
+    private Long likeRelationId;
 
     private LocalDateTime crtTime;
 

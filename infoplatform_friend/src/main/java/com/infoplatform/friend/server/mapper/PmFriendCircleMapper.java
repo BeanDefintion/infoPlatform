@@ -1,6 +1,6 @@
 package com.infoplatform.friend.server.mapper;
 
-import com.infoplatform.friend.server.entity.PmFriend;
+import com.infoplatform.friend.server.entity.PmFriendCircle;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author jack
  * @since 2019-08-22
  */
-public interface PmFriendMapper extends BaseMapper<PmFriend> {
+public interface PmFriendCircleMapper extends BaseMapper<PmFriendCircle> {
 
 }

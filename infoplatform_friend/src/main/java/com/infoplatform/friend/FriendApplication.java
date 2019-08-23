@@ -1,6 +1,7 @@
 package com.infoplatform.friend;
 
 import com.api.common.util.RedisUtil;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.spring4all.swagger.EnableSwagger2Doc;
@@ -38,8 +39,14 @@ public class FriendApplication {
         return new RedisUtil().redisTemplate();
     }
 
-//    @Bean
-//    public ObjectMapper objectMapper() {
-//        return new ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-//    }
+    /**
+     * 分页插件
+     */
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        // 你的最大单页限制数量
+        paginationInterceptor.setLimit(100);
+        return paginationInterceptor;
+    }
 }

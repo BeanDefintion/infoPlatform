@@ -20,9 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 public interface UserClient {
 
     /***服务调用--增加关注数*/
-    @RequestMapping(value = "/user/tb-user/incfans/{num}", method = RequestMethod.PUT)
-    BaseResponse incFanscount(@PathVariable("num") int num);
+    @RequestMapping(value = "/user/tb-user/incfans/{userId}/{num}", method = RequestMethod.PUT)
+    BaseResponse incFanscount(@PathVariable("userId") Long userId, @PathVariable("num") int num);
 
-    @RequestMapping(value = "/user/tb-user/incfollows/{num}", method = RequestMethod.PUT)
-    BaseResponse incFollowscount(@PathVariable("num") int num);
+    /***服务调用--增加粉丝数*/
+    @RequestMapping(value = "/user/tb-user/incfollows/{userId}/{num}", method = RequestMethod.PUT)
+    BaseResponse incFollowscount(@PathVariable("userId") Long userId, @PathVariable("num") int num);
+
+    /****/
 }

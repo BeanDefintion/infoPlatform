@@ -39,6 +39,12 @@ public class BaseResponse<T> implements Serializable {
         this.msg = statusCode.getMsg();
     }
 
+    public BaseResponse(StatusCode statusCode, T data) {
+        this.code = statusCode.getCode();
+        this.msg = statusCode.getMsg();
+        this.data = data;
+    }
+
     public BaseResponse(StatusCode statusCode, String msg) {
         this.code = statusCode.getCode();
         this.msg = msg;

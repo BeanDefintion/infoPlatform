@@ -56,14 +56,26 @@ public class CommonUtil {
     }
 
     /**
-     * 根据
+     * 从请求的请求头里面获取userId
      **/
-    public Long gainUserIdByRequest(HttpServletRequest request) {
+    public static Long gainUserIdByRequest(HttpServletRequest request) {
         try {
             return Long.valueOf(request.getHeader("authorization-userId"));
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("");
+            throw new RuntimeException("获取用户Id出错!");
+        }
+    }
+
+    /**
+     * 从请求的请求头里面获取userName
+     **/
+    public static String gainUserNameByRequest(HttpServletRequest request) {
+        try {
+            return request.getHeader("authorization-userName");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("获取用户姓名出错!");
         }
     }
 }

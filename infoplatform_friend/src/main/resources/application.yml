@@ -26,6 +26,7 @@ swagger:
   exclude-path: /error/**,/actuator/**
 
 mybatis-plus:
+  typeEnumsPackage: com.infoplatform.friend.server.enums
   mapper-locations: classpath*:/mapper/**/*.xml
 
 #hystrix:

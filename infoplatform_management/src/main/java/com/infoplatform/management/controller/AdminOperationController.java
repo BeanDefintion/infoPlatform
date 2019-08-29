@@ -22,4 +22,13 @@ public class AdminOperationController {
     public BaseResponse test() {
         return new BaseResponse(StatusCode.INVALIDPARAMS);
     }
+
+    @GetMapping("wait")
+    public void wait1() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

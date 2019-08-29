@@ -23,7 +23,8 @@ public enum StatusCode {
     INVALIDPARAMS(20006, "非法的参数!"),
     USERNOTLOGIN(20007, "用户没有登陆或登陆状态已失效!"),
     INVALIDTOKEN(20008, "无效Token!"),
-    EXPIRETOKEN(20009, "过期Token!");
+    EXPIRETOKEN(20009, "过期Token!"),
+    HYSTRIXERROR(20010, "熔断异常");
 
     @Getter
     @Setter

@@ -57,7 +57,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String url = exchange.getRequest().getURI().getPath();
         // 跳过不需要验证的路径
-        if (Arrays.asList(skipAuthUrls).contains(url)) return chain.filter(exchange);
+        if (Arrays.asList(skipAuthUrls).contains(url)
+                || url.startsWith("/m")) return chain.filter(exchange);
         if (HttpMethod.OPTIONS.equals(exchange.getRequest().getMethod())) return chain.filter(exchange);
 
         //从请求头中取出token
@@ -102,7 +103,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
         DataBuffer buffer = originalResponse.bufferFactory().wrap(response);
         return originalResponse.writeWith(Flux.just(buffer));
     }
-
 
     /**
      * 判断token是否在黑名单内

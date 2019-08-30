@@ -1,4 +1,4 @@
-package com.infoplatform.gateway.handler; /**
+package com.infoplatform.gateway.config.exceptionhandler; /**
  * @author wuweifeng wrote on 2018/11/2.
  */
 
@@ -104,6 +104,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
         result.put("body", msg);
         //错误记录
         ServerHttpRequest request = exchange.getRequest();
+        ex.printStackTrace();
         log.error("[全局异常处理]异常请求路径:{},记录异常信息:{}", request.getPath(), ex.getMessage());
         //参考AbstractErrorWebExceptionHandler
         if (exchange.getResponse().isCommitted()) {

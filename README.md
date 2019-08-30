@@ -15,6 +15,10 @@ Redis Rabbitmq MybatisPlus Docker
 
 4.目前未解决的问题:
 
-1.最新版本的GateWay的统一异常捕捉处理,类似与@controllerAdvice
-
+1.最新版本的GateWay的统一异常捕捉处理,类似与@controllerAdvice(版本切换成Greenwich.RELEASE,成功用重定义errorWebExceptionHandle
+的方式实现了)
+2.配置的getway限流一直不生效,发现他前面还有一个filter,测试的连接被它转走了
+3.gateway默认的限流配置是通过reactiveRedis完成的,我进入了它的源码, RedisRateLimiter是通过execute目录下的lua脚本来执行限流的操作的.
+然后我发现自己的配置怎么都不生效,设置尝试了运行lua文件,最后在它的issue里面发现可能是版本的问题.
+微软编译的redis版本只到了3.
 

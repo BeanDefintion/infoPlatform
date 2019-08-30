@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
 /**
  * GatewayApplicaton
@@ -19,7 +20,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * @version 1.0
  * @since 2019/8/8 10:45
  **/
-//@EnableHystrix
+@EnableHystrix
 @ComponentScan(basePackages = "com.**.**")
 @SpringBootApplication
 public class GatewayApplicaton {

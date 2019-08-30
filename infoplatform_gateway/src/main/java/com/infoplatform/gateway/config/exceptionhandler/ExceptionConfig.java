@@ -1,4 +1,4 @@
-package com.infoplatform.gateway.handler;
+package com.infoplatform.gateway.config.exceptionhandler;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;

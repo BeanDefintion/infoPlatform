@@ -1,4 +1,4 @@
-package com.infoplatform.gateway.config;
+package com.infoplatform.gateway.config.cors;
 
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.discovery.DiscoveryClientRouteDefinitionLocator;

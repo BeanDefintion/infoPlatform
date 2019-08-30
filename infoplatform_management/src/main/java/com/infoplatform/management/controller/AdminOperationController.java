@@ -20,15 +20,17 @@ public class AdminOperationController {
 
     @GetMapping("test")
     public BaseResponse test() {
-        return new BaseResponse(StatusCode.INVALIDPARAMS);
+        System.err.println("接口测试成功");
+        return new BaseResponse(StatusCode.SUCCESS);
     }
 
-    @GetMapping("wait")
-    public void wait1() {
+    @GetMapping("test/wait")
+    public String waittest() {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return "等待5s!";
     }
 }

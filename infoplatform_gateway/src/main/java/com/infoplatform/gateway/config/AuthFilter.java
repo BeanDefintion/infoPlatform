@@ -58,7 +58,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         String url = exchange.getRequest().getURI().getPath();
         // 跳过不需要验证的路径
         if (Arrays.asList(skipAuthUrls).contains(url)
-                || url.startsWith("/m")) return chain.filter(exchange);
+                || url.contains("test")) return chain.filter(exchange);
         if (HttpMethod.OPTIONS.equals(exchange.getRequest().getMethod())) return chain.filter(exchange);
 
         //从请求头中取出token

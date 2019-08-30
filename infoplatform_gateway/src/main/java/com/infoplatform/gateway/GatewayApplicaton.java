@@ -19,7 +19,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * @version 1.0
  * @since 2019/8/8 10:45
  **/
-@EnableHystrix
+//@EnableHystrix
 @ComponentScan(basePackages = "com.**.**")
 @SpringBootApplication
 public class GatewayApplicaton {

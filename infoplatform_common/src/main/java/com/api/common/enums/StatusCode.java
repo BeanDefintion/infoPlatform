@@ -24,7 +24,10 @@ public enum StatusCode {
     USERNOTLOGIN(20007, "用户没有登陆或登陆状态已失效!"),
     INVALIDTOKEN(20008, "无效Token!"),
     EXPIRETOKEN(20009, "过期Token!"),
-    HYSTRIXERROR(20010, "熔断异常");
+    /**
+     * 服务器熔断异常
+     **/
+    HYSTRIXERROR(20010, "服务器正忙,请稍后重试!");
 
     @Getter
     @Setter

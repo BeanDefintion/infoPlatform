@@ -15,13 +15,11 @@ spring:
           #          uri: lb://infoplatform_user #lb代表从注册中心获取服务
           uri: http://127.0.0.1:9003
           filters:
-          #            - StripPrefix=1
           predicates:
             - Path=/user/**
         - id: infoplatform-management
           uri: http://127.0.0.1:9004
           filters:
-          #            - StripPrefix=1
           predicates:
             - Path=/management/**
         - id: infoplatform-friend
@@ -30,22 +28,37 @@ spring:
           #            - StripPrefix=1
           predicates:
             - Path=/friend/**
-      default-filters:
-        - name: Hystrix
-          args:
-             name: default
-             fallbackUri: forward:/defaultFallBack
-             
+        - id: limit_route
+          uri: http://127.0.0.1:9004
+          predicates:
+            - Query=test
+          filters:
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@remoteAddrKeyResolver}'
+                redis-rate-limiter.replenishRate: 1 #每秒最大访问
+                redis-rate-limiter.burstCapacity: 3
+
+#      default-filters:
+#        - name: Hystrix
+#          args:
+#            name: default
+#            fallbackUri: forward:/defaultFallBack
+  redis:
+    host: localhost
+    port: 6379
+    password: 123456
+
 # hystrix 信号量隔离，3秒后自动超时
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: SEMAPHORE
-          thread:
-            timeoutInMilliseconds: 3000 #超时时间
-  shareSecurityContext: true
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          strategy: SEMAPHORE
+#          thread:
+#            timeoutInMilliseconds: 10000 #超时时间
+#  shareSecurityContext: true
 
 
 eureka:

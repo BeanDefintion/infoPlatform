@@ -10,6 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
     <description>项目的网关项目</description>
     <artifactId>infoplatform_gateway</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <docker.image.prefix>infoplatform</docker.image.prefix>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -39,4 +44,33 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>gateway</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- Docker maven plugin -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <imageName>119.3.68.67:5000/${docker.image.prefix}:${project.artifactId}</imageName>
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <dockerHost>http://119.3.68.67:2375</dockerHost>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+            <!-- Docker maven plugin -->
+        </plugins>
+    </build>
 </project>

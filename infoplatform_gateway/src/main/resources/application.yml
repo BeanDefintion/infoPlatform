@@ -39,33 +39,33 @@ spring:
                 redis-rate-limiter.replenishRate: 1 #每秒最大访问
                 redis-rate-limiter.burstCapacity: 1 #每秒放入令牌的数目
 
-        default-filters:
-          - name: Hystrix
-            args:
-              name: default
-              fallbackUri: forward:/defaultFallBack
+  #      default-filters:
+  #        - name: Hystrix
+  #          args:
+  #            name: default
+  #            fallbackUri: forward:/defaultFallBack
   redis:
-    host: localhost
+    host: 119.3.68.67
     port: 6379
-    password: 123456
+    password: xymt1234
     database: 0
 
 # hystrix 信号量隔离，3秒后自动超时
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: SEMAPHORE
-          thread:
-            timeoutInMilliseconds: 10000 #超时时间
-  shareSecurityContext: true
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          strategy: SEMAPHORE
+#          thread:
+#            timeoutInMilliseconds: 10000 #超时时间
+#  shareSecurityContext: true
 
 
 eureka:
   client:
     service-url:
-      defaultZone: http://tssb:xixi@localhost:9000/eureka/
+      defaultZone: http://tssb:xixi@119.3.68.67:9000/eureka/
   instance:
     prefer-ip-address: true
 

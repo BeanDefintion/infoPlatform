@@ -45,9 +45,9 @@ spring:
   #            name: default
   #            fallbackUri: forward:/defaultFallBack
   redis:
-    host: 119.3.68.67
+    host: localhost
     port: 6379
-    password: xymt1234
+    password: 123456
     database: 0
 
 # hystrix 信号量隔离，3秒后自动超时
@@ -65,7 +65,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://tssb:xixi@119.3.68.67:9000/eureka/
+      defaultZone: http://tssb:xixi@localhsot:9000/eureka/
   instance:
     prefer-ip-address: true
 

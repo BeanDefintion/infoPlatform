@@ -4,6 +4,7 @@ package com.infoplatform.friend.server.controller;
 import com.api.common.enums.StatusCode;
 import com.api.common.response.BaseResponse;
 import com.api.common.util.CommonUtil;
+import com.infoplatform.friend.config.anno.PointAdd;
 import com.infoplatform.friend.server.entity.PmLike;
 import com.infoplatform.friend.server.mapper.PmLikeMapper;
 import com.infoplatform.friend.server.service.IPmLikeService;
@@ -36,6 +37,7 @@ public class PmLikeController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @PointAdd(value = "2")
     @ApiOperation("点赞")
     @PostMapping("create")
     public BaseResponse create(HttpServletRequest request, @RequestBody PmLike pmLike) {

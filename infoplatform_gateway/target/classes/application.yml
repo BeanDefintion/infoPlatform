@@ -1,0 +1,84 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: infoplatform-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: false #设为true便开启通过服务中心的自动根据 serviceId 创建路由的功
+      routes:
+        - id: infoplatform-user
+          #          uri: lb://infoplatform_user #lb代表从注册中心获取服务
+          uri: http://127.0.0.1:9003
+          filters:
+          predicates:
+            - Path=/user/**
+        #        - id: infoplatform-management
+        #          uri: http://127.0.0.1:9004
+        #          filters:
+        #          predicates:
+        #            - Path=/management/**
+        - id: infoplatform-friend
+          uri: http://127.0.0.1:9005
+          filters:
+          #            - StripPrefix=1
+          predicates:
+            - Path=/friend/**
+        - id: limit_route
+          uri: http://127.0.0.1:9004
+          predicates:
+            - Path=/management/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                redis-rate-limiter.replenishRate: 1 #每秒最大访问
+                redis-rate-limiter.burstCapacity: 1 #每秒放入令牌的数目
+
+  #      default-filters:
+  #        - name: Hystrix
+  #          args:
+  #            name: default
+  #            fallbackUri: forward:/defaultFallBack
+  redis:
+    host: localhost
+    port: 6379
+    password: 123456
+    database: 0
+
+# hystrix 信号量隔离，3秒后自动超时
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          strategy: SEMAPHORE
+#          thread:
+#            timeoutInMilliseconds: 10000 #超时时间
+#  shareSecurityContext: true
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://tssb:xixi@localhsot:9000/eureka/
+  instance:
+    prefer-ip-address: true
+
+jwt:
+  config:
+    key: itcast
+
+auth:
+  skip:
+    urls: /user/login/login,/user/login/refresh
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+    com.windmt.filter: debug
